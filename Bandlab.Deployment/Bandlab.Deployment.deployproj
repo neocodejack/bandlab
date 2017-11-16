@@ -36,7 +36,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Bandlab\Bandlab.csproj">
       <Targets>Build;Package</Targets>
-      <AdditionalProperties>PackageLocation=..\Bandlab.Arm\$(ProjectReferencesOutputPath)\Bandlab\package.zip</AdditionalProperties>
+      <AdditionalProperties>PackageLocation=..\Bandlab.Deployment\$(ProjectReferencesOutputPath)\Bandlab\package.zip</AdditionalProperties>
       <IncludeFilePath>$(ProjectReferencesOutputPath)\Bandlab\package.zip</IncludeFilePath>
     </ProjectReference>
   </ItemGroup>
