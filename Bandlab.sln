@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bandlab", "Bandlab\Bandlab.csproj", "{8B3953FE-F9BA-49BD-8B37-B2C5DC7A44E7}"
 EndProject
-Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "Bandlab.Arm", "Bandlab.Arm\Bandlab.Arm.deployproj", "{DA4DECD2-3353-40DD-ABA0-63DA86998F09}"
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "Bandlab.Deployment", "Bandlab.Arm\Bandlab.Deployment.deployproj", "{DA4DECD2-3353-40DD-ABA0-63DA86998F09}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
