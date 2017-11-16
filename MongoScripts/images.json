@@ -1,0 +1,48 @@
+{ 
+    "_id" : ObjectId("5a0c72e6e786976df0f9378c"), 
+    "Name" : "jira.png"
+}
+{ 
+    "_id" : ObjectId("5a0c72f4e786976df0f9378d"), 
+    "Name" : "pentaho error.png"
+}
+{ 
+    "_id" : ObjectId("5a0c75c0e786970fdc677fbe"), 
+    "Name" : "data.png", 
+    "CreatedDate" : ISODate("2017-11-15T17:13:28.433+0000")
+}
+{ 
+    "_id" : ObjectId("5a0c75e9e786970fdc677fbf"), 
+    "Name" : "data.png", 
+    "CreatedDate" : ISODate("2017-11-15T17:14:17.804+0000")
+}
+{ 
+    "_id" : ObjectId("5a0d2908e786975004c31f07"), 
+    "Name" : "visualstudio.png", 
+    "CreatedDate" : ISODate("2017-11-16T05:58:32.576+0000"), 
+    "Collection" : [
+        ObjectId("5a0d2882e786975004c31f05"), 
+        ObjectId("5a0d28a8e786975004c31f06"), 
+        ObjectId("5a0d2f73e78697369cebb51e")
+    ], 
+    "Metadata" : {
+        "FileId" : null, 
+        "FileName" : "visualstudio.png", 
+        "FileUrl" : "https://avishekpa.blob.core.windows.net/myimages/visualstudio.png", 
+        "FileSizeInBytes" : NumberLong(87729)
+    }
+}
+{ 
+    "_id" : ObjectId("5a0d3040e78697369cebb51f"), 
+    "Name" : "data.png", 
+    "CreatedDate" : ISODate("2017-11-16T06:29:20.489+0000"), 
+    "Collection" : [
+        ObjectId("5a0d2882e786975004c31f05")
+    ], 
+    "Metadata" : {
+        "FileId" : null, 
+        "FileName" : "data.png", 
+        "FileUrl" : "https://avishekpa.blob.core.windows.net/myimages/data.png", 
+        "FileSizeInBytes" : NumberLong(8133)
+    }
+}

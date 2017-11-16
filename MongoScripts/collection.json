@@ -1,0 +1,12 @@
+{ 
+    "_id" : ObjectId("5a0d2882e786975004c31f05"), 
+    "Name" : "album1"
+}
+{ 
+    "_id" : ObjectId("5a0d28a8e786975004c31f06"), 
+    "Name" : "album2"
+}
+{ 
+    "_id" : ObjectId("5a0d2f73e78697369cebb51e"), 
+    "Name" : "album3"
+}
