@@ -223,16 +223,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\BlobHelper.cs" />
+    <Compile Include="Helpers\Helper.cs" />
     <Compile Include="Helpers\MongoDbHelper.cs" />
-    <Compile Include="Models\BlobUploadModel.cs" />
-    <Compile Include="Models\BlobDownloadModel.cs" />
+    <Compile Include="Models\UploadModel.cs" />
+    <Compile Include="Models\DownloadModel.cs" />
     <Compile Include="Models\Collection.cs" />
     <Compile Include="Models\Images.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Provider\BlobStorageUploadProvider.cs" />
-    <Compile Include="Services\BlobService.cs" />
-    <Compile Include="Services\IBlobService.cs" />
+    <Compile Include="Provider\StorageUploadProvider.cs" />
+    <Compile Include="Services\CdnService.cs" />
+    <Compile Include="Services\ICdnService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationInsights.config">

@@ -37,7 +37,7 @@ namespace Bandlab.App_Start
             // container.LoadConfiguration();
 
             // TODO: Register your types here
-             container.RegisterType<IBlobService, BlobService>();
+             container.RegisterType<ICdnService, CdnService>();
         }
     }
 }

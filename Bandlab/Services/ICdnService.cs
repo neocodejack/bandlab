@@ -8,11 +8,11 @@ using System.Web;
 
 namespace Bandlab.Services
 {
-    public interface IBlobService
+    public interface ICdnService
     {
-        Task<List<BlobUploadModel>> UploadBlobs(HttpContent httpContent, string collectionId);
-        Task<BlobDownloadModel> DownloadBlob(string blobId);
-        Task<string> DeleteBlob(string blobId);
+        Task<List<UploadModel>> UploadFile(HttpContent httpContent, string collectionId);
+        Task<DownloadModel> DownloadFile(string blobId);
+        Task<string> DeleteFile(string blobId);
         Task<Collection> AddCollection(string name);
         Task<List<Collection>> GetCollection();
         List<Images> GetImagesByCollection(string name);

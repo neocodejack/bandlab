@@ -8,7 +8,7 @@ using System.Web;
 
 namespace Bandlab.Helpers
 {
-    public static class BlobHelper
+    public static class Helper
     {
         public static CloudBlobContainer GetBlobContainer()
         {

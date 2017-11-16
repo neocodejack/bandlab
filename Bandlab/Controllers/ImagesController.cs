@@ -16,10 +16,10 @@ namespace Bandlab.Controllers
     public class ImagesController : ApiController
     {
         // Interface in place so you can resolve with IoC container of your choice
-        private readonly IBlobService _service;
+        private readonly ICdnService _service;
 
         //Dependency Resolver using Unity
-        public ImagesController(IBlobService service)
+        public ImagesController(ICdnService service)
         {
             _service = service;
         }
@@ -30,7 +30,7 @@ namespace Bandlab.Controllers
         /// <returns></returns>
         [Route("api/blobs/{collectionid}/upload")]
         [HttpPost]
-        [ResponseType(typeof(List<BlobUploadModel>))]
+        [ResponseType(typeof(List<UploadModel>))]
         public async Task<IHttpActionResult> PostBlobUpload(string collectionId)
         {
             try
@@ -42,7 +42,7 @@ namespace Bandlab.Controllers
                 }
 
                 // Call service to perform upload, then check result to return as content
-                var result = await _service.UploadBlobs(Request.Content,collectionId);
+                var result = await _service.UploadFile(Request.Content,collectionId);
                 if (result != null && result.Count > 0)
                 {
                     return Ok(result);
@@ -68,7 +68,7 @@ namespace Bandlab.Controllers
         {
             try
             {
-                var result = await _service.DownloadBlob(blobId);
+                var result = await _service.DownloadFile(blobId);
                 if (result == null)
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);
@@ -114,7 +114,7 @@ namespace Bandlab.Controllers
         {
             try
             {
-                var result = await _service.DeleteBlob(blobId);
+                var result = await _service.DeleteFile(blobId);
                 if (result == null)
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);

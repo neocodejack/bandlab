@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Bandlab.Models
 {
-    public class BlobUploadModel
+    public class UploadModel
     {
         public string FileId { get; set; }
         public string FileName { get; set; }

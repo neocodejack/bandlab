@@ -11,15 +11,15 @@ using System.Web;
 
 namespace Bandlab.Provider
 {
-    public class BlobStorageUploadProvider : MultipartFileStreamProvider
+    public class StorageUploadProvider : MultipartFileStreamProvider
     {
-        public List<BlobUploadModel> Uploads { get; set; }
+        public List<UploadModel> Uploads { get; set; }
         private ObjectId _collectionId { get; set; }
 
-        public BlobStorageUploadProvider(string collectionId) : base(Path.GetTempPath())
+        public StorageUploadProvider(string collectionId) : base(Path.GetTempPath())
         {
             _collectionId = ObjectId.Parse(collectionId);
-            Uploads = new List<BlobUploadModel>();
+            Uploads = new List<UploadModel>();
         }
 
         public override Task ExecutePostProcessingAsync()
@@ -33,7 +33,7 @@ namespace Bandlab.Provider
                 var fileName = Path.GetFileName(fileData.Headers.ContentDisposition.FileName.Trim('"'));
 
                 // Retrieve reference to a blob
-                var blobContainer = BlobHelper.GetBlobContainer();
+                var blobContainer = Helper.GetBlobContainer();
                 var blob = blobContainer.GetBlockBlobReference(fileName);
                 
                 // Set the blob content type
@@ -49,10 +49,10 @@ namespace Bandlab.Provider
                 File.Delete(fileData.LocalFileName);
                 
                 //Adding to mongo collection
-                var fileId = mongoHelper.Add(new Images { Name = blob.Name, CreatedDate = DateTime.Now, Collection = new List<ObjectId>{ _collectionId }, Metadata = new BlobUploadModel { FileName = blob.Name, FileUrl = blob.Uri.AbsoluteUri, FileSizeInBytes = blob.Properties.Length } });
+                var fileId = mongoHelper.Add(new Images { Name = blob.Name, CreatedDate = DateTime.Now, Collection = new List<ObjectId>{ _collectionId }, Metadata = new UploadModel { FileName = blob.Name, FileUrl = blob.Uri.AbsoluteUri, FileSizeInBytes = blob.Properties.Length } });
 
                 // Create blob upload model with properties from blob info
-                var blobUpload = new BlobUploadModel
+                var blobUpload = new UploadModel
                 {
                     FileId = Convert.ToString(fileId),
                     FileName = blob.Name,

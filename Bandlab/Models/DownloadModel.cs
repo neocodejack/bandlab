@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Bandlab.Models
 {
-    public class BlobDownloadModel
+    public class DownloadModel
     {
         public MemoryStream BlobStream { get; set; }
         public string BlobFileName { get; set; }

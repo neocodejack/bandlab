@@ -14,6 +14,6 @@ namespace Bandlab.Models
         public string Name { get; set; }
         public DateTime CreatedDate { get; set; }
         public List<ObjectId> Collection { get; set; }
-        public BlobUploadModel Metadata { get; set; }
+        public UploadModel Metadata { get; set; }
     }
 }

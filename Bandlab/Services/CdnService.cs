@@ -11,18 +11,18 @@ using System.Web;
 
 namespace Bandlab.Services
 {
-    public class BlobService : IBlobService
+    public class CdnService : ICdnService
     {
         private MongoDbHelper mongoDbHelper;
-        public BlobService()
+        public CdnService()
         {
             mongoDbHelper = new MongoDbHelper();
         }
-        public async Task<List<BlobUploadModel>> UploadBlobs(HttpContent httpContent, string collectionId)
+        public async Task<List<UploadModel>> UploadFile(HttpContent httpContent, string collectionId)
         {
-            var blobUploadProvider = new BlobStorageUploadProvider(collectionId);
+            var uploadProvider = new StorageUploadProvider(collectionId);
             
-            var list = await httpContent.ReadAsMultipartAsync(blobUploadProvider)
+            var list = await httpContent.ReadAsMultipartAsync(uploadProvider)
                 .ContinueWith(task =>
                 {
                     if (task.IsFaulted || task.IsCanceled)
@@ -38,13 +38,13 @@ namespace Bandlab.Services
             return list;
         }
 
-        public async Task<BlobDownloadModel> DownloadBlob(string blobId)
+        public async Task<DownloadModel> DownloadFile(string blobId)
         {
             var blobName = GetBlobName(blobId);
             
             if (!String.IsNullOrEmpty(blobName))
             {
-                var container = BlobHelper.GetBlobContainer();
+                var container = Helper.GetBlobContainer();
                 var blob = container.GetBlockBlobReference(blobName);
 
                 var ms = new MemoryStream();
@@ -53,7 +53,7 @@ namespace Bandlab.Services
                 var lastPos = blob.Name.LastIndexOf('/');
                 var fileName = blob.Name.Substring(lastPos + 1, blob.Name.Length - lastPos - 1);
                 
-                var download = new BlobDownloadModel
+                var download = new DownloadModel
                 {
                     BlobStream = ms,
                     BlobFileName = fileName,
@@ -67,13 +67,13 @@ namespace Bandlab.Services
             return null;
         }
 
-        public async Task<string> DeleteBlob(string blobId)
+        public async Task<string> DeleteFile(string blobId)
         {
             var blobName = GetBlobName(blobId);
 
             if (!string.IsNullOrEmpty(blobName))
             {
-                var container = BlobHelper.GetBlobContainer();
+                var container = Helper.GetBlobContainer();
                 var blob = container.GetBlockBlobReference(blobName);
 
                 await blob.DeleteAsync();
