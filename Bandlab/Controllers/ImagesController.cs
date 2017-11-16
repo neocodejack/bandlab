@@ -28,7 +28,7 @@ namespace Bandlab.Controllers
         /// Uploads one or more blob files.
         /// </summary>
         /// <returns></returns>
-        [Route("api/blobs/{collectionid}/upload")]
+        [Route("api/v1/blobs/{collectionid}/upload")]
         [HttpPost]
         [ResponseType(typeof(List<UploadModel>))]
         public async Task<IHttpActionResult> PostBlobUpload(string collectionId)
@@ -62,7 +62,7 @@ namespace Bandlab.Controllers
         /// </summary>
         /// <param name="blobId">The ID of the blob.</param>
         /// <returns></returns>
-        [Route("api/blobs/{blobId}/download")]
+        [Route("api/v1/blobs/{blobId}/download")]
         [HttpGet]
         public async Task<HttpResponseMessage> GetBlobDownload(string blobId)
         {
@@ -108,7 +108,7 @@ namespace Bandlab.Controllers
         /// </summary>
         /// <param name="blobId"></param>
         /// <returns></returns>
-        [Route("api/blobs/{blobId}/delete")]
+        [Route("api/v1/blobs/{blobId}/delete")]
         [HttpDelete]
         public async Task<HttpResponseMessage> DeleteBlob(string blobId)
         {
@@ -140,7 +140,7 @@ namespace Bandlab.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [Route("api/blob/images")]
+        [Route("api/v1/blob/images")]
         [HttpGet]
         public async Task<IHttpActionResult> GetImages()
         {
@@ -160,7 +160,7 @@ namespace Bandlab.Controllers
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        [Route("api/collection/{name}")]
+        [Route("api/v1/collection/{name}")]
         [HttpPut]
         public async Task<IHttpActionResult> AddCollection(string name)
         {
@@ -179,7 +179,7 @@ namespace Bandlab.Controllers
         /// Get list of collections
         /// </summary>
         /// <returns></returns>
-        [Route("api/collections")]
+        [Route("api/v1/collections")]
         [HttpGet]
         public async Task<IHttpActionResult> GetCollection()
         {
@@ -199,7 +199,7 @@ namespace Bandlab.Controllers
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        [Route("api/collection/{name}/images")]
+        [Route("api/v1/collection/{name}/images")]
         [HttpGet]
         public async Task<IHttpActionResult> GetImagesByCollection(string name)
         {
@@ -220,7 +220,7 @@ namespace Bandlab.Controllers
         /// <param name="collectionId"></param>
         /// <param name="imageId"></param>
         /// <returns></returns>
-        [Route("api/collection/map/{collectionId}/{imageId}")]
+        [Route("api/v1/collection/map/{collectionId}/{imageId}")]
         [HttpPut]
         public async Task<IHttpActionResult> MapImageToCollection(string collectionId, string imageId)
         {
