@@ -34,10 +34,26 @@
     <Content Include="WebSite.parameters.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bandlab\Bandlab.csproj">
+    <ProjectReference Include="..\Bandlab.DataInformation\Bandlab.DataInformation.csproj">
+      <Targets>
+      </Targets>
+      <AdditionalProperties>
+      </AdditionalProperties>
+      <IncludeFilePath>
+      </IncludeFilePath>
+    </ProjectReference>
+    <ProjectReference Include="..\Bandlab.ImageUpload\Bandlab.ImageUpload.csproj">
+      <Targets>
+      </Targets>
+      <AdditionalProperties>
+      </AdditionalProperties>
+      <IncludeFilePath>
+      </IncludeFilePath>
+    </ProjectReference>
+    <ProjectReference Include="..\Bandlab\Bandlab.Gateway.csproj">
       <Targets>Build;Package</Targets>
-      <AdditionalProperties>PackageLocation=..\Bandlab.Deployment\$(ProjectReferencesOutputPath)\Bandlab\package.zip</AdditionalProperties>
-      <IncludeFilePath>$(ProjectReferencesOutputPath)\Bandlab\package.zip</IncludeFilePath>
+      <AdditionalProperties>PackageLocation=..\Bandlab.Deployment\$(ProjectReferencesOutputPath)\Bandlab.Gateway\package.zip</AdditionalProperties>
+      <IncludeFilePath>$(ProjectReferencesOutputPath)\Bandlab.Gateway\package.zip</IncludeFilePath>
     </ProjectReference>
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />
