@@ -228,7 +228,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Helper.cs" />
-    <Compile Include="Helpers\MongoDbHelper.cs" />
+    <Compile Include="DataHandler\MongoDbHelper.cs" />
     <Compile Include="Models\UploadModel.cs" />
     <Compile Include="Models\DownloadModel.cs" />
     <Compile Include="Models\Collection.cs" />

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Bandlab.Helpers
+namespace Bandlab.DataHandler
 {
     public class MongoDbHelper
     {
