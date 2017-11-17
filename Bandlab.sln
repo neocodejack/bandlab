@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bandlab", "Bandlab\Bandlab.
 EndProject
 Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "Bandlab.Deployment", "Bandlab.Deployment\Bandlab.Deployment.deployproj", "{DA4DECD2-3353-40DD-ABA0-63DA86998F09}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bandlab.MessageQueue", "Bandlab.MessageQueue\Bandlab.MessageQueue.csproj", "{0B7C79E8-45F7-42DC-8443-5F4901FF9C53}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{DA4DECD2-3353-40DD-ABA0-63DA86998F09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA4DECD2-3353-40DD-ABA0-63DA86998F09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA4DECD2-3353-40DD-ABA0-63DA86998F09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B7C79E8-45F7-42DC-8443-5F4901FF9C53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B7C79E8-45F7-42DC-8443-5F4901FF9C53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B7C79E8-45F7-42DC-8443-5F4901FF9C53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B7C79E8-45F7-42DC-8443-5F4901FF9C53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
