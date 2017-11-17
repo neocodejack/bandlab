@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Swashbuckle.Swagger.Annotations;
 
-namespace Bandlab.Controllers
+namespace Bandlab.Uploader.Controllers
 {
     public class ValuesController : ApiController
     {

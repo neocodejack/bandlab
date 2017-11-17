@@ -34,21 +34,15 @@
     <Content Include="WebSite.parameters.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bandlab.DataInformation\Bandlab.DataInformation.csproj">
-      <Targets>
-      </Targets>
-      <AdditionalProperties>
-      </AdditionalProperties>
-      <IncludeFilePath>
-      </IncludeFilePath>
+    <ProjectReference Include="..\Bandlab.DataProcessor\Bandlab.DataProcessor.csproj">
+      <Targets>Build;Package</Targets>
+      <AdditionalProperties>PackageLocation=..\Bandlab.Deployment\$(ProjectReferencesOutputPath)\Bandlab.DataProcessor\package.zip</AdditionalProperties>
+      <IncludeFilePath>$(ProjectReferencesOutputPath)\Bandlab.DataProcessor\package.zip</IncludeFilePath>
     </ProjectReference>
-    <ProjectReference Include="..\Bandlab.ImageUpload\Bandlab.ImageUpload.csproj">
-      <Targets>
-      </Targets>
-      <AdditionalProperties>
-      </AdditionalProperties>
-      <IncludeFilePath>
-      </IncludeFilePath>
+    <ProjectReference Include="..\Bandlab.Uploader\Bandlab.Uploader.csproj">
+      <Targets>Build;Package</Targets>
+      <AdditionalProperties>PackageLocation=..\Bandlab.Deployment\$(ProjectReferencesOutputPath)\Bandlab.Uploader\package.zip</AdditionalProperties>
+      <IncludeFilePath>$(ProjectReferencesOutputPath)\Bandlab.Uploader\package.zip</IncludeFilePath>
     </ProjectReference>
     <ProjectReference Include="..\Bandlab\Bandlab.Gateway.csproj">
       <Targets>Build;Package</Targets>

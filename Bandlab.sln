@@ -9,9 +9,9 @@ Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "Bandlab.Deployment", "Bandl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bandlab.MessageQueue", "Bandlab.MessageQueue\Bandlab.MessageQueue.csproj", "{0B7C79E8-45F7-42DC-8443-5F4901FF9C53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bandlab.ImageUpload", "Bandlab.ImageUpload\Bandlab.ImageUpload.csproj", "{0533B9CF-8B01-491A-BBA0-DA337A244A46}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bandlab.Uploader", "Bandlab.Uploader\Bandlab.Uploader.csproj", "{E8DDD9EB-0C2A-4828-BCC6-3E86F3CE2EBD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bandlab.DataInformation", "Bandlab.DataInformation\Bandlab.DataInformation.csproj", "{86FB25CF-DE20-4073-878F-27F90D52FD08}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bandlab.DataProcessor", "Bandlab.DataProcessor\Bandlab.DataProcessor.csproj", "{57910AE8-6311-4D53-BE8D-B0F1634DE9B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,14 +31,14 @@ Global
 		{0B7C79E8-45F7-42DC-8443-5F4901FF9C53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B7C79E8-45F7-42DC-8443-5F4901FF9C53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B7C79E8-45F7-42DC-8443-5F4901FF9C53}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0533B9CF-8B01-491A-BBA0-DA337A244A46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0533B9CF-8B01-491A-BBA0-DA337A244A46}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0533B9CF-8B01-491A-BBA0-DA337A244A46}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0533B9CF-8B01-491A-BBA0-DA337A244A46}.Release|Any CPU.Build.0 = Release|Any CPU
-		{86FB25CF-DE20-4073-878F-27F90D52FD08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{86FB25CF-DE20-4073-878F-27F90D52FD08}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{86FB25CF-DE20-4073-878F-27F90D52FD08}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{86FB25CF-DE20-4073-878F-27F90D52FD08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8DDD9EB-0C2A-4828-BCC6-3E86F3CE2EBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8DDD9EB-0C2A-4828-BCC6-3E86F3CE2EBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8DDD9EB-0C2A-4828-BCC6-3E86F3CE2EBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8DDD9EB-0C2A-4828-BCC6-3E86F3CE2EBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57910AE8-6311-4D53-BE8D-B0F1634DE9B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57910AE8-6311-4D53-BE8D-B0F1634DE9B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57910AE8-6311-4D53-BE8D-B0F1634DE9B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57910AE8-6311-4D53-BE8D-B0F1634DE9B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
