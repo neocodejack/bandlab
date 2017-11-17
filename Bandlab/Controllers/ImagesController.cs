@@ -2,10 +2,13 @@
 using Bandlab.Services;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -234,5 +237,38 @@ namespace Bandlab.Controllers
                 return InternalServerError(ex);
             }
         }     
+
+        [Route("api/v1/gateway/uploadfile/{collectionId}")]
+        [HttpPost]
+        public async Task<IHttpActionResult> UploadFile(string collectionId)
+        {
+            using(var client = new HttpClient())
+            {
+                HttpContent fileStreamContent = new StreamContent(Request.Content.ReadAsStreamAsync().Result);
+                using(var formData = new MultipartFormDataContent())
+                {
+                    formData.Add(fileStreamContent);
+                    var response = await client.PostAsync("http://localhost:49721/api/v1/blobs/upload", formData);
+                    return Ok(response);
+                }
+            }
+        }
+
+        [Route("api/v1/gateway/downloadfile/{fileName}")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> DownloadFile(string fileName)
+        {
+            using(var client = new HttpClient())
+            {
+                var myObject = (dynamic)new JsonObject();
+                myObject.Data = "some data";
+                myObject.Data2 = "some more data";
+                var content = new StringContent(jsonObject.ToString(), Encoding.UTF8, "application/json");
+
+                var response = await client.PostAsync("http://localhost:49721/api/v1/blobs/download",content);
+                return response;
+                
+            }
+        }
     }
 }
