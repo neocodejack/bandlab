@@ -29,12 +29,14 @@ namespace Bandlab.Controllers
                 var httpRequest = HttpContext.Current.Request;
                 string filePath = string.Empty;
                 string fileName = string.Empty;
+                string contentType = string.Empty;
                 if (httpRequest.Files.Count > 0)
                 {
                     foreach (string file in httpRequest.Files)
                     {
                         var postedFile = httpRequest.Files[file];
                         fileName = postedFile.FileName;
+                        contentType = postedFile.ContentType;
                         filePath = HttpContext.Current.Server.MapPath("~/App_Data/" + postedFile.FileName);
                         postedFile.SaveAs(filePath);
                     }
@@ -44,7 +46,9 @@ namespace Bandlab.Controllers
                 {
                     var fileStreamContent = new ByteArrayContent(File.ReadAllBytes(filePath));
                     fileStreamContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = fileName };
-                    fileStreamContent.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+
+
+                    fileStreamContent.Headers.ContentType = new MediaTypeHeaderValue(contentType);
                     using (var formData = new MultipartFormDataContent())
                     {
                         formData.Add(fileStreamContent);
