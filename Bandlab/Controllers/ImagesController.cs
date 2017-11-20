@@ -68,7 +68,9 @@ namespace Bandlab.Controllers
 
                             HttpContent content = new FormUrlEncodedContent(requestData);
                             var saveResponse = await client.PostAsync("http://localhost:49730/api/v1/collection/upload", content);
-                            return Ok(JsonConvert.SerializeObject(saveResponse.Content.ReadAsStringAsync().Result));
+                            var responseDatainString = saveResponse.Content.ReadAsStringAsync().Result;
+                            var response = JsonConvert.DeserializeObject<ResponseModel>(responseDatainString);
+                            return Ok(response);
                         }
                         else
                         {
