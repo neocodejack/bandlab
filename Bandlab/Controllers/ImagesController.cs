@@ -1,4 +1,7 @@
-﻿using System.Net;
+﻿using Microsoft.ServiceBus;
+using Microsoft.ServiceBus.Messaging;
+using System.Configuration;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -44,7 +47,7 @@ namespace Bandlab.Controllers
                     // Code to call the Download file service
                     var content = new StringContent(fileName);
 
-                    var response = await client.PostAsync("http://localhost:49721/api/v1/blobs/download", content);  //The hardcoded url can be moved to config file 
+                    var response = await client.PostAsync("http://localhost:49721/api/v1/blobs/download", content);  //The hardcoded url can be moved to config file
                     if (response.IsSuccessStatusCode)
                     {
                         return response;
@@ -98,6 +101,16 @@ namespace Bandlab.Controllers
                     else
                     {
                         //Code to call the queue to delete the file
+                        var connectionString = ConfigurationManager.AppSettings["ServiceBusConnectiongString"].ToString();
+                        var queueName = ConfigurationManager.AppSettings["QueueName"].ToString();
+
+                        ServiceBusEnvironment.SystemConnectivity.Mode = ConnectivityMode.Http;
+
+                        var queueClient = QueueClient.CreateFromConnectionString(connectionString, queueName);
+                        var message = new BrokeredMessage(fileName);
+                        //Sending th message to queue
+                        queueClient.Send(message);
+
                         return new HttpResponseMessage
                         {
                             Content = new StringContent("Unable to process request Now, the request has been moved to the queue"),
