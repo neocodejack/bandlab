@@ -1,8 +1,9 @@
 using System;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
+using Bandlab.Services;
 
-namespace Bandlab.App_Start
+namespace Bandlab.DataProcessor.App_Start
 {
     /// <summary>
     /// Specifies the Unity configuration for the main container.
@@ -36,7 +37,7 @@ namespace Bandlab.App_Start
             // container.LoadConfiguration();
 
             // TODO: Register your types here
-             
+            container.RegisterType<IDataService, DataService>();
         }
     }
 }

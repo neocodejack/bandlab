@@ -14,6 +14,15 @@ namespace Bandlab.Models
         public string Name { get; set; }
         public DateTime CreatedDate { get; set; }
         public List<ObjectId> Collection { get; set; }
-        public UploadModel Metadata { get; set; }
+        public ImageMetaData Metadata { get; set; }
+    }
+
+    public class ImageMetaData
+    {
+        public string FileId { get; set; }
+        public string FileName { get; set; }
+        public string FileUrl { get; set; }
+        public long FileSizeInBytes { get; set; }
+        public long FileSizeInKb { get { return (long)Math.Ceiling((double)FileSizeInBytes / 1024); } }
     }
 }

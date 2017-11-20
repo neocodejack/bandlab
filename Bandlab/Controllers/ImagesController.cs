@@ -1,244 +1,14 @@
-﻿using Bandlab.Models;
-using Bandlab.Services;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
-using System.Web.Http.Description;
 
 namespace Bandlab.Controllers
 {
+    [RoutePrefix("api/v1")]
     public class ImagesController : ApiController
     {
-        // Interface in place so you can resolve with IoC container of your choice
-        private readonly ICdnService _service;
-
-        //Dependency Resolver using Unity
-        public ImagesController(ICdnService service)
-        {
-            _service = service;
-        }
-
-        /// <summary>
-        /// Uploads one or more blob files.
-        /// </summary>
-        /// <returns></returns>
-        [Route("api/v1/blobs/{collectionid}/upload")]
-        [HttpPost]
-        [ResponseType(typeof(List<UploadModel>))]
-        public async Task<IHttpActionResult> PostBlobUpload(string collectionId)
-        {
-            try
-            {
-                // This endpoint only supports multipart form data
-                if (!Request.Content.IsMimeMultipartContent("form-data"))
-                {
-                    return StatusCode(HttpStatusCode.UnsupportedMediaType);
-                }
-
-                // Call service to perform upload, then check result to return as content
-                var result = await _service.UploadFile(Request.Content,collectionId);
-                if (result != null && result.Count > 0)
-                {
-                    return Ok(result);
-                }
-
-                // Otherwise
-                return BadRequest();
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
-
-        /// <summary>
-        /// Downloads a blob file.
-        /// </summary>
-        /// <param name="blobId">The ID of the blob.</param>
-        /// <returns></returns>
-        [Route("api/v1/blobs/{blobId}/download")]
-        [HttpGet]
-        public async Task<HttpResponseMessage> GetBlobDownload(string blobId)
-        {
-            try
-            {
-                var result = await _service.DownloadFile(blobId);
-                if (result == null)
-                {
-                    return new HttpResponseMessage(HttpStatusCode.NotFound);
-                }
-
-                // Reset the stream position; otherwise, download will not work
-                result.BlobStream.Position = 0;
-
-                // Create response message with blob stream as its content
-                var message = new HttpResponseMessage(HttpStatusCode.OK)
-                {
-                    Content = new StreamContent(result.BlobStream)
-                };
-                
-                message.Content.Headers.ContentLength = result.BlobLength;
-                message.Content.Headers.ContentType = new MediaTypeHeaderValue(result.BlobContentType);
-                message.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
-                {
-                    FileName = HttpUtility.UrlDecode(result.BlobFileName),
-                    Size = result.BlobLength
-                };
-
-                return message;
-            }
-            catch (Exception ex)
-            {
-                return new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.InternalServerError,
-                    Content = new StringContent(ex.Message)
-                };
-            }
-        }
-
-        /// <summary>
-        /// Delete Blob Id
-        /// </summary>
-        /// <param name="blobId"></param>
-        /// <returns></returns>
-        [Route("api/v1/blobs/{blobId}/delete")]
-        [HttpDelete]
-        public async Task<HttpResponseMessage> DeleteBlob(string blobId)
-        {
-            try
-            {
-                var result = await _service.DeleteFile(blobId);
-                if (result == null)
-                {
-                    return new HttpResponseMessage(HttpStatusCode.NotFound);
-                }
-
-                return new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent(result+" is Deleted")
-                };
-            }
-            catch (Exception ex)
-            {
-                return new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.InternalServerError,
-                    Content = new StringContent(ex.Message)
-                };
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [Route("api/v1/blob/images")]
-        [HttpGet]
-        public async Task<IHttpActionResult> GetImages()
-        {
-            try
-            {
-                var result = await _service.GetImages();
-                return Ok(result);
-
-            }catch(Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
-
-        /// <summary>
-        /// Add a collection
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        [Route("api/v1/collection/{name}")]
-        [HttpPut]
-        public async Task<IHttpActionResult> AddCollection(string name)
-        {
-            try
-            {
-                var result = await _service.AddCollection(name);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
-
-        /// <summary>
-        /// Get list of collections
-        /// </summary>
-        /// <returns></returns>
-        [Route("api/v1/collections")]
-        [HttpGet]
-        public async Task<IHttpActionResult> GetCollection()
-        {
-            try
-            {
-                var result = await _service.GetCollection();
-                return Ok(result);
-
-            }catch(Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
-
-        /// <summary>
-        /// Get Images By Collection
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        [Route("api/v1/collection/{name}/images")]
-        [HttpGet]
-        public async Task<IHttpActionResult> GetImagesByCollection(string name)
-        {
-            try
-            {
-                var result = _service.GetImagesByCollection(name);
-                return Ok(result);
-
-            }catch(Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
-
-        /// <summary>
-        /// Map Image to a collection
-        /// </summary>
-        /// <param name="collectionId"></param>
-        /// <param name="imageId"></param>
-        /// <returns></returns>
-        [Route("api/v1/collection/map/{collectionId}/{imageId}")]
-        [HttpPut]
-        public async Task<IHttpActionResult> MapImageToCollection(string collectionId, string imageId)
-        {
-            try
-            {
-                var result = await _service.Map(collectionId, imageId);
-                return Ok(result);
-
-            }catch(Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }     
-
-        [Route("api/v1/gateway/uploadfile/{collectionId}")]
+        [Route("gateway/uploadfile/{collectionId}")]
         [HttpPost]
         public async Task<IHttpActionResult> UploadFile(string collectionId)
         {
@@ -254,21 +24,97 @@ namespace Bandlab.Controllers
             }
         }
 
-        [Route("api/v1/gateway/downloadfile/{fileName}")]
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileId"></param>
+        /// <returns></returns>
+        [Route("gateway/downloadfile/{fileId}")]
         [HttpGet]
-        public async Task<HttpResponseMessage> DownloadFile(string fileName)
+        public async Task<HttpResponseMessage> DownloadFile(string fileId)
         {
             using(var client = new HttpClient())
             {
-                var myObject = (dynamic)new JsonObject();
-                myObject.Data = "some data";
-                myObject.Data2 = "some more data";
-                var content = new StringContent(jsonObject.ToString(), Encoding.UTF8, "application/json");
+                var fileName = string.Empty;
+                var fileresponse = client.GetAsync("http://localhost:49730/api/v1/collection/images/" + fileId).Result;
+                fileName = fileresponse.Content.ReadAsStringAsync().Result;
+                if (!string.IsNullOrEmpty(fileName))
+                {
+                    fileName = fileresponse.Content.ReadAsStringAsync().Result;
+                    // Code to call the Download file service
+                    var content = new StringContent(fileName);
 
-                var response = await client.PostAsync("http://localhost:49721/api/v1/blobs/download",content);
-                return response;
+                    var response = await client.PostAsync("http://localhost:49721/api/v1/blobs/download", content);  //The hardcoded url can be moved to config file 
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return response;
+                    }
+                    else
+                    {
+                        return new HttpResponseMessage
+                        {
+                            Content = new StringContent("Unable to process request Now"),
+                            StatusCode = HttpStatusCode.InternalServerError
+                        };
+                    }
+                }
+                else
+                {
+                    return new HttpResponseMessage
+                    {
+                        Content = new StringContent("Unable to process request Now"),
+                        StatusCode = HttpStatusCode.InternalServerError
+                    };
+                }
                 
             }
         }
+
+        /// <summary>
+        /// Orchastration to delete a file from both blob and db
+        /// </summary>
+        /// <param name="fileId"></param>
+        /// <returns></returns>
+        [Route("gateway/deletefile/{fileId}")]
+        [HttpDelete]
+        public async Task<HttpResponseMessage> DeleteFile(string fileId)
+        {
+            using(var client = new HttpClient())
+            {
+                var fileName = string.Empty;
+                var response = await client.GetAsync("http://localhost:49730/api/v1/collection/images/" + fileId);
+                var deletefileResponse = await client.GetAsync("http://localhost:49730/api/v1/collection/delete/" + fileId);
+
+                fileName = response.Content.ReadAsStringAsync().Result;
+                
+                if (!string.IsNullOrEmpty(fileName))
+                {
+                    var deletefileContent = new StringContent(fileName);
+                    var deleteresponse = await client.PostAsync("http://localhost:49721/api/v1/blobs/delete", deletefileContent);  //The hardcoded url can be moved to config file 
+                    if (deleteresponse.IsSuccessStatusCode)
+                    {
+                        return deleteresponse;
+                    }
+                    else
+                    {
+                        //Code to call the queue to delete the file
+                        return new HttpResponseMessage
+                        {
+                            Content = new StringContent("Unable to process request Now, the request has been moved to the queue"),
+                            StatusCode = HttpStatusCode.InternalServerError
+                        };
+                    }
+                }
+                else
+                {
+                    return new HttpResponseMessage
+                    {
+                        Content = new StringContent("fileName is blank"),
+                        StatusCode = HttpStatusCode.InternalServerError
+                    };
+                }
+            }
+        }
+            
     }
 }

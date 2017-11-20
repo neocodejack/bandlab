@@ -64,12 +64,13 @@ namespace Bandlab.Uploader.Controllers
         /// <returns></returns>
         [Route("api/v1/blobs/download")]
         [HttpPost]
-        public async Task<HttpResponseMessage> GetBlobDownload(string blobName)
+        public async Task<HttpResponseMessage> Download()
         {
             try
             {
 
-                var result = await _service.DownloadFile(blobName);
+                var fileName = Request.Content.ReadAsStringAsync().Result;
+                var result = await _service.DownloadFile(fileName);
                 if (result == null)
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);
@@ -110,12 +111,13 @@ namespace Bandlab.Uploader.Controllers
         /// <param name="blobId"></param>
         /// <returns></returns>
         [Route("api/v1/blobs/delete")]
-        [HttpDelete]
-        public async Task<HttpResponseMessage> DeleteBlob(string blobName)
+        [HttpPost]
+        public async Task<HttpResponseMessage> DeleteBlob()
         {
             try
             {
-                var result = await _service.DeleteFile(blobName);
+                var fileName = Request.Content.ReadAsStringAsync().Result;
+                var result = await _service.DeleteFile(fileName);
                 if (result == null)
                 {
                     return new HttpResponseMessage(HttpStatusCode.NotFound);

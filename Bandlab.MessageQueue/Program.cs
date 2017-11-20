@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.ServiceBus.Messaging;
 using Microsoft.ServiceBus;
+using System.Net.Http;
 
 namespace qsend
 {
@@ -21,8 +22,7 @@ namespace qsend
             ServiceBusEnvironment.SystemConnectivity.Mode = ConnectivityMode.Http;
 
             var client = QueueClient.CreateFromConnectionString(connectionString, queueName);
-            //var fileData = System.IO.File.ReadAllBytes(@"C:\Users\AP7392\Pictures\data.png");
-            //Console.WriteLine("File read");
+            
             Console.WriteLine("Enter an album name: ");
             var albumname = Console.ReadLine();
             var message = new BrokeredMessage(albumname);
@@ -33,7 +33,7 @@ namespace qsend
 
             Console.WriteLine("Message successfully sent! Press ENTER to exit program");
             Console.ReadLine();
-            
+
         }
     }
 }

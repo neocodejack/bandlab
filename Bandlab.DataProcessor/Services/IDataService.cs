@@ -8,15 +8,15 @@ using System.Web;
 
 namespace Bandlab.Services
 {
-    public interface ICdnService
+    public interface IDataService
     {
-        Task<List<UploadModel>> UploadFile(HttpContent httpContent, string collectionId);
-        Task<DownloadModel> DownloadFile(string blobId);
+        Images UploadFile(Images entity);
         Task<string> DeleteFile(string blobId);
         Task<Collection> AddCollection(string name);
         Task<List<Collection>> GetCollection();
         List<Images> GetImagesByCollection(string name);
         Task<Images> Map(string collectionId, string imageId);
         Task<List<Images>> GetImages();
+        string GetBlobName(string blobId);
     }
 }
