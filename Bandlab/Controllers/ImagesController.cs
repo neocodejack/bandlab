@@ -1,9 +1,18 @@
-﻿using Microsoft.ServiceBus;
+﻿using Bandlab.Models;
+using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Mime;
+using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 
 namespace Bandlab.Controllers
@@ -15,15 +24,63 @@ namespace Bandlab.Controllers
         [HttpPost]
         public async Task<IHttpActionResult> UploadFile(string collectionId)
         {
-            using(var client = new HttpClient())
+            try
             {
-                HttpContent fileStreamContent = new StreamContent(Request.Content.ReadAsStreamAsync().Result);
-                using(var formData = new MultipartFormDataContent())
+                var httpRequest = HttpContext.Current.Request;
+                string filePath = string.Empty;
+                string fileName = string.Empty;
+                if (httpRequest.Files.Count > 0)
                 {
-                    formData.Add(fileStreamContent);
-                    var response = await client.PostAsync("http://localhost:49721/api/v1/blobs/upload", formData);
-                    return Ok(response);
+                    foreach (string file in httpRequest.Files)
+                    {
+                        var postedFile = httpRequest.Files[file];
+                        fileName = postedFile.FileName;
+                        filePath = HttpContext.Current.Server.MapPath("~/App_Data/" + postedFile.FileName);
+                        postedFile.SaveAs(filePath);
+                    }
                 }
+                
+                using (var client = new HttpClient())
+                {
+                    var fileStreamContent = new ByteArrayContent(File.ReadAllBytes(filePath));
+                    fileStreamContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = fileName };
+                    fileStreamContent.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+                    using (var formData = new MultipartFormDataContent())
+                    {
+                        formData.Add(fileStreamContent);
+                        var uploadResponse = await client.PostAsync("http://localhost:49721/api/v1/blobs/upload", formData);
+
+                        //Deleting the local disk file
+                        File.Delete(filePath);
+                        if (uploadResponse.IsSuccessStatusCode)
+                        {
+                            var resultSet = uploadResponse.Content.ReadAsStringAsync().Result;
+                            var fileDetails = JsonConvert.DeserializeObject<List<UploadResponseModel>>(resultSet);
+                            //Code to Update database records post upload
+                            var requestData = new List<KeyValuePair<string, string>>
+                            {
+                                new KeyValuePair<string, string>("CollectionId", collectionId),
+                                new KeyValuePair<string, string>("FileName", fileDetails[0].FileName),
+                                new KeyValuePair<string, string>("FileUrl", fileDetails[0].FileUrl),
+                                new KeyValuePair<string, string>("FileSizeInBytes", fileDetails[0].FileSizeInBytes),
+                                new KeyValuePair<string, string>("FileSizeInKb", fileDetails[0].FileSizeInKb)
+                            };
+
+                            HttpContent content = new FormUrlEncodedContent(requestData);
+                            var saveResponse = await client.PostAsync("http://localhost:49730/api/v1/collection/upload", content);
+                            return Ok(JsonConvert.SerializeObject(saveResponse.Content.ReadAsStringAsync().Result));
+                        }
+                        else
+                        {
+                            //Code to push the request to queue
+                            return InternalServerError();
+                        }
+                    }   
+                }
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
             }
         }
 

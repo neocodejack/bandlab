@@ -22,19 +22,14 @@ namespace Bandlab.Provider
         public override Task ExecutePostProcessingAsync()
         {
             foreach (var fileData in FileData)
-            {
-                // Sometimes the filename has a leading and trailing double-quote character
-                // when uploaded, so we trim it; otherwise, we get an illegal character exception
+            {   
                 var fileName = Path.GetFileName(fileData.Headers.ContentDisposition.FileName.Trim('"'));
-
-                // Retrieve reference to a blob
+                
                 var blobContainer = Helper.GetBlobContainer();
                 var blob = blobContainer.GetBlockBlobReference(fileName);
                 
-                // Set the blob content type
                 blob.Properties.ContentType = fileData.Headers.ContentType.MediaType;
-
-                // Upload file into blob storage, basically copying it from local disk into Azure
+                
                 using (var fs = File.OpenRead(fileData.LocalFileName))
                 {
                     blob.UploadFromStream(fs);

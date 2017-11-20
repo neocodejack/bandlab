@@ -1,4 +1,6 @@
-﻿using Bandlab.Services;
+﻿using Bandlab.Models;
+using Bandlab.Services;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +22,34 @@ namespace Bandlab.DataProcessor.Controllers
         public DataController(IDataService service)
         {
             _service = service;
+        }
+
+        [Route("collection/upload")]
+        [HttpPost]
+        public IHttpActionResult AddImageInformation(EndpointApiRequestData requestData)
+        {
+            try
+            {
+                var collectionIds = new List<ObjectId>();
+                collectionIds.Add(ObjectId.Parse(requestData.CollectionId));
+
+                var imageDetails = new Images
+                {
+                    CreatedDate = DateTime.Now,
+                    Name = requestData.FileName,
+                    Collection = collectionIds,
+                    Metadata = new ImageMetaData { FileId = string.Empty, FileName = requestData.FileName, FileSizeInBytes = requestData.FileSizeInBytes, FileUrl = requestData.FileUrl }
+                };
+
+                var response = _service.UploadFile(imageDetails);
+                return Ok(response);
+
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+
         }
 
         /// <summary>

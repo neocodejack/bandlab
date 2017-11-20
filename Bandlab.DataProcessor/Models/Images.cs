@@ -25,4 +25,10 @@ namespace Bandlab.Models
         public long FileSizeInBytes { get; set; }
         public long FileSizeInKb { get { return (long)Math.Ceiling((double)FileSizeInBytes / 1024); } }
     }
+
+    public class EndpointApiRequestData : ImageMetaData
+    {
+        public string CollectionId { get; set; }
+
+    }
 }
