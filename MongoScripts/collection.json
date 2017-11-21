@@ -10,3 +10,19 @@
     "_id" : ObjectId("5a0d2f73e78697369cebb51e"), 
     "Name" : "album3"
 }
+{ 
+    "_id" : ObjectId("5a0ed2d710c810106c8b6ab9"), 
+    "Name" : "album4"
+}
+{ 
+    "_id" : ObjectId("5a0ee2fb10c81014348499df"), 
+    "Name" : "alumb4"
+}
+{ 
+    "_id" : ObjectId("5a0ee30810c81014348499e0"), 
+    "Name" : "album5"
+}
+{ 
+    "_id" : ObjectId("5a0ee63d10c81014348499e1"), 
+    "Name" : "album6"
+}
