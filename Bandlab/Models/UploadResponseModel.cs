@@ -21,4 +21,11 @@ namespace Bandlab.Models
         public List<string> Collection { get; set; }
         public UploadResponseModel Metadata { get; set; }
     }
+
+    public class QueueMessageData
+    {
+        public byte[] fileData { get; set; }
+        public string contentType { get; set; }
+        public string fileName { get; set; }
+    }
 }

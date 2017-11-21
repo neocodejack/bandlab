@@ -1,0 +1,13 @@
+{
+  "bindings": [
+    {
+      "name": "myQueueItem",
+      "type": "serviceBusTrigger",
+      "direction": "in",
+      "queueName": "queuetest2",
+      "connection": "netservicequeue_RootManageSharedAccessKey_SERVICEBUS",
+      "accessRights": "Manage"
+    }
+  ],
+  "disabled": false
+}

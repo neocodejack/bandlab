@@ -9,8 +9,6 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net.Mime;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -50,23 +48,22 @@ namespace Bandlab.Controllers
                         postedFile.SaveAs(filePath);
                     }
                 }
-                
+ 
                 using (var client = new HttpClient())
                 {
                     var fileStreamContent = new ByteArrayContent(File.ReadAllBytes(filePath));
                     fileStreamContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = fileName };
-
-
                     fileStreamContent.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+
                     using (var formData = new MultipartFormDataContent())
                     {
                         formData.Add(fileStreamContent);
                         var uploadResponse = await client.PostAsync(_baseUploadUrl+"api/v1/blobs/upload", formData);
-
-                        //Deleting the local disk file
-                        File.Delete(filePath);
+                        
                         if (uploadResponse.IsSuccessStatusCode)
                         {
+                            //Deleting the local disk file
+                            File.Delete(filePath);
                             var resultSet = uploadResponse.Content.ReadAsStringAsync().Result;
                             var fileDetails = JsonConvert.DeserializeObject<List<UploadResponseModel>>(resultSet);
                             //Code to Update database records post upload
@@ -87,7 +84,6 @@ namespace Bandlab.Controllers
                         }
                         else
                         {
-                            //Code to push the request to queue
                             return InternalServerError();
                         }
                     }   

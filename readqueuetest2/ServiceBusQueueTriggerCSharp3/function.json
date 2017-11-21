@@ -1,0 +1,13 @@
+{
+  "bindings": [
+    {
+      "name": "myQueueItem",
+      "type": "serviceBusTrigger",
+      "direction": "in",
+      "queueName": "uploadqueue",
+      "connection": "netservicequeue_RootManageSharedAccessKey_SERVICEBUS",
+      "accessRights": "Manage"
+    }
+  ],
+  "disabled": false
+}
