@@ -20,6 +20,15 @@ namespace Bandlab.Controllers
     [RoutePrefix("api/v1")]
     public class ImagesController : ApiController
     {
+        private string _baseUploadUrl;
+        private string _baseDataUrl;
+
+        public ImagesController()
+        {
+            _baseUploadUrl = ConfigurationManager.AppSettings["UploaderApi"].ToString();
+            _baseDataUrl = ConfigurationManager.AppSettings["DataProcessorApi"].ToString();
+        }
+
         [Route("gateway/uploadfile/{collectionId}")]
         [HttpPost]
         public async Task<IHttpActionResult> UploadFile(string collectionId)
@@ -52,7 +61,7 @@ namespace Bandlab.Controllers
                     using (var formData = new MultipartFormDataContent())
                     {
                         formData.Add(fileStreamContent);
-                        var uploadResponse = await client.PostAsync("http://localhost:49721/api/v1/blobs/upload", formData);
+                        var uploadResponse = await client.PostAsync(_baseUploadUrl+"api/v1/blobs/upload", formData);
 
                         //Deleting the local disk file
                         File.Delete(filePath);
@@ -71,7 +80,7 @@ namespace Bandlab.Controllers
                             };
 
                             HttpContent content = new FormUrlEncodedContent(requestData);
-                            var saveResponse = await client.PostAsync("http://localhost:49730/api/v1/collection/upload", content);
+                            var saveResponse = await client.PostAsync(_baseDataUrl+"api/v1/collection/upload", content);
                             var responseDatainString = saveResponse.Content.ReadAsStringAsync().Result;
                             var response = JsonConvert.DeserializeObject<ResponseModel>(responseDatainString);
                             return Ok(response);
@@ -102,7 +111,7 @@ namespace Bandlab.Controllers
             using(var client = new HttpClient())
             {
                 var fileName = string.Empty;
-                var fileresponse = client.GetAsync("http://localhost:49730/api/v1/collection/images/" + fileId).Result;
+                var fileresponse = client.GetAsync(_baseDataUrl + "api/v1/collection/images/" + fileId).Result;
                 fileName = fileresponse.Content.ReadAsStringAsync().Result;
                 if (!string.IsNullOrEmpty(fileName))
                 {
@@ -110,7 +119,7 @@ namespace Bandlab.Controllers
                     // Code to call the Download file service
                     var content = new StringContent(fileName);
 
-                    var response = await client.PostAsync("http://localhost:49721/api/v1/blobs/download", content);  //The hardcoded url can be moved to config file
+                    var response = await client.PostAsync(_baseUploadUrl + "api/v1/blobs/download", content);  //The hardcoded url can be moved to config file
                     if (response.IsSuccessStatusCode)
                     {
                         return response;
@@ -148,15 +157,15 @@ namespace Bandlab.Controllers
             using(var client = new HttpClient())
             {
                 var fileName = string.Empty;
-                var response = await client.GetAsync("http://localhost:49730/api/v1/collection/images/" + fileId);
-                var deletefileResponse = await client.GetAsync("http://localhost:49730/api/v1/collection/delete/" + fileId);
+                var response = await client.GetAsync(_baseDataUrl + "api/v1/collection/images/" + fileId);
+                var deletefileResponse = await client.GetAsync(_baseDataUrl + "api/v1/collection/delete/" + fileId);
 
                 fileName = response.Content.ReadAsStringAsync().Result;
                 
                 if (!string.IsNullOrEmpty(fileName))
                 {
                     var deletefileContent = new StringContent(fileName);
-                    var deleteresponse = await client.PostAsync("http://localhost:49721/api/v1/blobs/delete", deletefileContent);  //The hardcoded url can be moved to config file 
+                    var deleteresponse = await client.PostAsync(_baseUploadUrl + "api/v1/blobs/delete", deletefileContent);  //The hardcoded url can be moved to config file 
                     if (deleteresponse.IsSuccessStatusCode)
                     {
                         return deleteresponse;

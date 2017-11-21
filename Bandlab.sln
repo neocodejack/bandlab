@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bandlab.Uploader", "Bandlab
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bandlab.DataProcessor", "Bandlab.DataProcessor\Bandlab.DataProcessor.csproj", "{57910AE8-6311-4D53-BE8D-B0F1634DE9B1}"
 EndProject
-Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "Bandlab.Deployment.Uploader", "Bandlab.Deployment.Uploader\Bandlab.Deployment.Uploader.deployproj", "{74EF4F3C-E9B4-4373-BB6E-26E0BAF1E21F}"
-EndProject
 Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "Bandlab.DataProcessor.Deployment", "Bandlab.DataProcessor.Deployment\Bandlab.DataProcessor.Deployment.deployproj", "{C3737C17-3DE4-47C0-9761-9FCD71984337}"
 EndProject
 Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "Bandlab.Uploader.Deployment", "Bandlab.Uploader.Deployment\Bandlab.Uploader.Deployment.deployproj", "{E094E717-CF57-44EA-969D-C7ECBFB9112F}"
@@ -45,10 +43,6 @@ Global
 		{57910AE8-6311-4D53-BE8D-B0F1634DE9B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57910AE8-6311-4D53-BE8D-B0F1634DE9B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57910AE8-6311-4D53-BE8D-B0F1634DE9B1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{74EF4F3C-E9B4-4373-BB6E-26E0BAF1E21F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{74EF4F3C-E9B4-4373-BB6E-26E0BAF1E21F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{74EF4F3C-E9B4-4373-BB6E-26E0BAF1E21F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{74EF4F3C-E9B4-4373-BB6E-26E0BAF1E21F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C3737C17-3DE4-47C0-9761-9FCD71984337}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C3737C17-3DE4-47C0-9761-9FCD71984337}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3737C17-3DE4-47C0-9761-9FCD71984337}.Release|Any CPU.ActiveCfg = Release|Any CPU
