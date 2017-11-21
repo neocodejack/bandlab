@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>da4decd2-3353-40dd-aba0-63da86998f09</ProjectGuid>
+    <ProjectGuid>e094e717-cf57-44ea-969d-c7ecbfb9112f</ProjectGuid>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworkIdentifier>Deployment</TargetFrameworkIdentifier>
@@ -25,7 +25,6 @@
   <Import Condition=" Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Deployment\1.1\DeploymentProject.targets') " Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Deployment\1.1\DeploymentProject.targets" />
   <!-- vertag<:>end -->
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="Deployment.targets">
       <Visible>False</Visible>
     </None>
@@ -34,10 +33,10 @@
     <Content Include="WebSite.parameters.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bandlab\Bandlab.Gateway.csproj">
+    <ProjectReference Include="..\Bandlab.Uploader\Bandlab.Uploader.csproj">
       <Targets>Build;Package</Targets>
-      <AdditionalProperties>PackageLocation=..\Bandlab.Deployment\$(ProjectReferencesOutputPath)\Bandlab.Gateway\package.zip</AdditionalProperties>
-      <IncludeFilePath>$(ProjectReferencesOutputPath)\Bandlab.Gateway\package.zip</IncludeFilePath>
+      <AdditionalProperties>PackageLocation=..\Bandlab.Uploader.Deployment\$(ProjectReferencesOutputPath)\Bandlab.Uploader\package.zip</AdditionalProperties>
+      <IncludeFilePath>$(ProjectReferencesOutputPath)\Bandlab.Uploader\package.zip</IncludeFilePath>
     </ProjectReference>
   </ItemGroup>
   <Target Name="GetReferenceAssemblyPaths" />

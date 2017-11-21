@@ -3,18 +3,18 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "hostingPlanName": {
-      "value": "bandlabassignment"
+      "value": "bandlabassignment1"
     },
-    "bandlabPackageFolder": {
-      "value": "Bandlab"
+    "uploaderPackageFolder": {
+      "value": "Bandlab.Uploader"
     },
-    "bandlabPackageFileName": {
+    "uploaderPackageFileName": {
       "value": "package.zip"
     },
-    "gatewayPackageFolder": {
-      "value": "Bandlab.Gateway"
+    "uploaderapiPackageFolder": {
+      "value": "Bandlab.Uploader"
     },
-    "gatewayPackageFileName": {
+    "uploaderapiPackageFileName": {
       "value": "package.zip"
     }
   }

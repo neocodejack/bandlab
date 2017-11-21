@@ -35,34 +35,45 @@
         "description": "Describes plan's instance count"
       }
     },
+    "uploaderapiType": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "allowedValues": [
+        "Standard_LRS",
+        "Standard_ZRS",
+        "Standard_GRS",
+        "Standard_RAGRS",
+        "Premium_LRS"
+      ]
+    },
     "_artifactsLocation": {
       "type": "string"
     },
     "_artifactsLocationSasToken": {
       "type": "securestring"
     },
-    "bandlabPackageFolder": {
+    "uploaderPackageFolder": {
       "type": "string",
       "minLength": 1,
       "metadata": {
         "description": "WebDeploy package location. This path is relative to the _artifactsLocation parameter"
       }
     },
-    "bandlabPackageFileName": {
+    "uploaderPackageFileName": {
       "type": "string",
       "minLength": 1,
       "metadata": {
         "description": "Name of the webdeploy package"
       }
     },
-    "gatewayPackageFolder": {
+    "uploaderapiPackageFolder": {
       "type": "string",
       "minLength": 1,
       "metadata": {
         "description": "WebDeploy package location. This path is relative to the _artifactsLocation parameter"
       }
     },
-    "gatewayPackageFileName": {
+    "uploaderapiPackageFileName": {
       "type": "string",
       "minLength": 1,
       "metadata": {
@@ -71,7 +82,8 @@
     }
   },
   "variables": {
-    "webSiteName": "[concat('webSite', uniqueString(resourceGroup().id))]"
+    "webSiteName": "[concat('webSite', uniqueString(resourceGroup().id))]",
+    "uploaderapiName": "[concat('uploaderapi', uniqueString(resourceGroup().id))]"
   },
   "resources": [
     {
@@ -116,10 +128,10 @@
             "[resourceId('Microsoft.Web/sites', variables('webSiteName'))]"
           ],
           "tags": {
-            "displayName": "gateway"
+            "displayName": "uploaderapi"
           },
           "properties": {
-            "packageUri": "[concat(parameters('_artifactsLocation'), '/', parameters('gatewayPackageFolder'), '/', parameters('gatewayPackageFileName'), parameters('_artifactsLocationSasToken'))]",
+            "packageUri": "[concat(parameters('_artifactsLocation'), '/', parameters('uploaderapiPackageFolder'), '/', parameters('uploaderapiPackageFileName'), parameters('_artifactsLocationSasToken'))]",
             "dbType": "None",
             "connectionString": "",
             "setParameters": {
@@ -347,6 +359,20 @@
       "properties": {
         "applicationId": "[variables('webSiteName')]"
       }
+    },
+    {
+      "name": "[variables('uploaderapiName')]",
+      "type": "Microsoft.Storage/storageAccounts",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2016-01-01",
+      "sku": {
+        "name": "[parameters('uploaderapiType')]"
+      },
+      "dependsOn": [ ],
+      "tags": {
+        "displayName": "uploaderapi"
+      },
+      "kind": "Storage"
     }
   ]
 }
